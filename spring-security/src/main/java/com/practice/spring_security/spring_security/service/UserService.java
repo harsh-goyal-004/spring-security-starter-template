@@ -48,7 +48,7 @@ public class UserService {
         if(authentication.isAuthenticated()){
             return jwtService.generateToken(user);
         }else{
-            return "Sorry Harsh there is an error";
+            return "Error while verifying the User";
         }
     }
 }
