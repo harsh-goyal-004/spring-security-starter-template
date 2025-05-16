@@ -34,6 +34,18 @@ public class JWTService {
                 .compact();
     }
 
+//    This method generates a new RefreshToken with longer lifespan
+    public String generateRefreshToken(User user) {
+        Map<String, Object> claim = new HashMap<>();
+        return Jwts.builder()
+                .claims(claim)
+                .subject(user.getUsername())
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
+                .signWith(getKey())
+                .compact();
+    }
+
     public SecretKey getKey(){
 
         byte[] keyBytes = Decoders.BASE64URL.decode(secretKey);
@@ -67,4 +79,6 @@ public class JWTService {
 
         return expirationDate.before(new Date());
     }
+
+
 }
